@@ -1,0 +1,48 @@
+####################################################
+# Switch - Main Switch
+####################################################
+- switch:
+    id: "switch_1"
+    friendly_name: "Switch 1"
+    platform: "switch"
+    entity_category: None
+
+####################################################
+# Number - Countdown Timer
+####################################################
+- number:
+    id: "countdown_1"
+    friendly_name: "Switch 1 Countdown"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 86400
+    step_size: 1
+    unit_of_measurement: "s"
+    restore_on_reconnect: false
+
+####################################################
+# Select - Relay Status (Power Recovery)
+####################################################
+- select:
+    id: "relay_status"
+    friendly_name: "Power Recovery"
+    platform: "select"
+    entity_category: "config"
+    select_options:
+      off: "Off"
+      on: "On"
+      memory: "Memory"
+
+####################################################
+# Select - Switch Type
+####################################################
+- select:
+    id: "switch_type"
+    friendly_name: "Switch Type"
+    platform: "select"
+    entity_category: "config"
+    select_options:
+      flip: "Flip"
+      sync: "Sync"
+      button: "Button"
