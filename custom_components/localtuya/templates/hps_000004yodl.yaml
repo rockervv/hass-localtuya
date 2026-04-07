@@ -1,0 +1,150 @@
+ url=https://github.com/rockervv/hass-localtuya/blob/master/custom_components/localtuya/templates/hps_000004yodl.yaml
+# Human Presence Sensor Configuration Template
+# Model: 000004yodl
+# Description: Complete configuration for Tuya Human Presence Sensor with all 10 DPs
+
+####################################################
+# Binary Sensor - Presence State (Read-only)
+####################################################
+- binary_sensor:
+    id: "1"
+    friendly_name: "Presence State"
+    platform: "binary_sensor"
+    entity_category: None
+    device_class: "occupancy"
+    state_on: "presence,1,on"
+
+####################################################
+# Sensor - Illuminance (Read-only)
+####################################################
+- sensor:
+    id: "101"
+    friendly_name: "Illuminance"
+    platform: "sensor"
+    entity_category: "diagnostic"
+    unit_of_measurement: "lux"
+    device_class: "illuminance"
+    state_class: "measurement"
+
+####################################################
+# Number Controls (Read-Write)
+####################################################
+
+# Sensitivity Level
+- number:
+    id: "2"
+    friendly_name: "Sensitivity"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 9
+    step_size: 1
+    unit_of_measurement: "level"
+
+# Near Detection Distance
+- number:
+    id: "3"
+    friendly_name: "Near Detection Distance"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 1000
+    step_size: 1
+    unit_of_measurement: "cm"
+    restore_on_reconnect: false
+
+# Far Detection Distance
+- number:
+    id: "4"
+    friendly_name: "Far Detection Distance"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 1000
+    step_size: 1
+    unit_of_measurement: "cm"
+    restore_on_reconnect: false
+
+# Holding Time (Presence confirmation time)
+- number:
+    id: "102"
+    friendly_name: "Holding Time"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 65
+    step_size: 1
+    unit_of_measurement: "0.1s"
+    restore_on_reconnect: false
+
+# Delay Time (No presence delay)
+- number:
+    id: "103"
+    friendly_name: "Delay Time"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 15000
+    step_size: 1
+    unit_of_measurement: "0.1s"
+    restore_on_reconnect: false
+
+# Current Detection Distance
+- number:
+    id: "105"
+    friendly_name: "Current Detection Distance"
+    platform: "number"
+    entity_category: "config"
+    min_value: 0
+    max_value: 1100
+    step_size: 1
+    unit_of_measurement: "cm"
+    restore_on_reconnect: false
+
+####################################################
+# Switch - Environment Confirmation (Read-Write)
+####################################################
+- switch:
+    id: "5"
+    friendly_name: "Self Checking"
+    platform: "switch"
+    entity_category: "config"
+    is_passive_entity: false
+
+####################################################
+# Select - Scene Parameters (Read-Write)
+####################################################
+- select:
+    id: "104"
+    friendly_name: "Scene"
+    platform: "select"
+    entity_category: "config"
+    select_options:
+      living_room: "Living Room"
+      bathroom: "Bathroom"
+      bedroom: "Bedroom"
+      sleep_detection: "Sleep Detection"
+
+####################################################
+# Configuration Guide
+####################################################
+# This template provides a complete configuration for the
+# Human Presence Sensor model 000004yodl with all 10 data points mapped.
+#
+# Data Points (DP) Mapping:
+#   DP 1:   presence_state (Binary Sensor - Presence)
+#   DP 2:   sensitivity (Number - Sensitivity Level)
+#   DP 3:   near_detection (Number - Minimum Detection Distance)
+#   DP 4:   far_detection (Number - Maximum Detection Distance)
+#   DP 5:   self_checking (Switch - Environment Confirmation)
+#   DP 101: illuminance_value (Sensor - Light Illuminance)
+#   DP 102: holding_time (Number - Presence Confirmation Time)
+#   DP 103: delay_time (Number - No Presence Delay Time)
+#   DP 104: scene (Select - Scene Quick Settings)
+#   DP 105: dis_current (Number - Current Detection Distance)
+#
+# How to use this template:
+# 1. In Home Assistant, add LocalTuya integration
+# 2. When configuring a device, select this template
+# 3. All DPs will be automatically configured
+# 4. Adjust values according to your needs
