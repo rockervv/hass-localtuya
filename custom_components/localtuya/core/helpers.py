@@ -109,7 +109,26 @@ def get_gateway_by_deviceid(device_id: str, cloud_data: dict) -> GATEWAY:
             ):
                 return GATEWAY(dev_id, dev_data)
 
-
+def get_template_for_model(model_name: str) -> str | None:
+    """Return template filename that matches the device model."""
+    if not model_name:
+        return None
+    
+    # 提取 model ID（移除特殊字符和版本號）
+    model_id = model_name.lower().strip()
+    
+    # 列出所有可用的 templates
+    templates_list = templates.list_templates()
+    
+    # 匹配規則：template 檔名中包含 model ID
+    for template_name in templates_list.keys():
+        template_lower = template_name.lower()
+        # 檢查 model ID 是否在 template 名稱中
+        if model_id in template_lower:
+            return template_name
+    
+    return None
+    
 ###############################
 #    Auto configure device    #
 ###############################
