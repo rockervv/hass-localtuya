@@ -422,17 +422,42 @@ class LocalTuyaOptionsFlowHandler(OptionsFlow):
         )
 
     async def async_step_device_setup_method(self, user_input=None):
-        """Manage basic options."""
-        DEVICE_SETUP_METHOD = [
-            "auto_configure_device",
-            "pick_entity_type",
-            "choose_template",
-        ]
-        return self.async_show_menu(
-            step_id="device_setup_method",
-            menu_options=DEVICE_SETUP_METHOD,
+    """Manage basic options."""
+    # 首先檢查是否有匹配的 template
+    device_model = self.device_data.get(CONF_MODEL, "")
+    matched_template = await self.hass.async_add_executor_job(
+        templates.get_template_for_model, device_model
+    )
+    
+    if matched_template:
+        _LOGGER.info(f"Found matching template for model {device_model}: {matched_template}")
+        # 自動套用 template
+        self.use_template = True
+        _config = await self.hass.async_add_executor_job(
+            templates.import_config, matched_template
         )
-
+        dev_conf = self.device_data
+        dev_conf[CONF_ENTITIES] = _config
+        dev_conf[CONF_DPS_STRINGS] = self.dps_strings
+        dev_conf[CONF_NODE_ID] = self.nodeID
+        self.device_data = dev_conf
+        
+        self.entities = dev_conf[CONF_ENTITIES]
+        self.template_device = self.device_data
+        self.editing_device = True
+        return await self.async_step_configure_device()
+    
+    # 如果沒有匹配的 template，顯示選單讓用戶選擇
+    DEVICE_SETUP_METHOD = [
+        "auto_configure_device",
+        "pick_entity_type",
+        "choose_template",
+    ]
+    return self.async_show_menu(
+        step_id="device_setup_method",
+        menu_options=DEVICE_SETUP_METHOD,
+    )
+    
     async def async_step_configure_device(self, user_input=None):
         """Handle input of basic info."""
         errors = {}
