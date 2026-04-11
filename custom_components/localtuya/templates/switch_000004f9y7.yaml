@@ -1,18 +1,20 @@
 ####################################################
-# Switch - Main Switch
+# Switch - Main Switch (DP 1)
 ####################################################
 - switch:
-    id: "switch_1"
-    friendly_name: "Switch 1"
+    id: 1
+    friendly_name: "廚房燈"
     platform: "switch"
     entity_category: None
+    scan_interval: 10          # 每 10 秒主動詢問一次狀態（很重要！）
+    polling: true              # 強制開啟輪詢
 
 ####################################################
-# Number - Countdown Timer
+# Number - Countdown Timer (DP 9)
 ####################################################
 - number:
-    id: "countdown_1"
-    friendly_name: "Switch 1 Countdown"
+    id: 9
+    friendly_name: "廚房燈 倒計時"
     platform: "number"
     entity_category: "config"
     min_value: 0
@@ -20,29 +22,32 @@
     step_size: 1
     unit_of_measurement: "s"
     restore_on_reconnect: false
+    scan_interval: 30
 
 ####################################################
-# Select - Relay Status (Power Recovery)
+# Select - Power Recovery (DP 38)
 ####################################################
 - select:
-    id: "relay_status"
-    friendly_name: "Power Recovery"
+    id: 38
+    friendly_name: "上電狀態 (Power Recovery)"
     platform: "select"
     entity_category: "config"
     select_options:
       off: "Off"
       on: "On"
       memory: "Memory"
+    scan_interval: 30
 
 ####################################################
-# Select - Switch Type
+# Select - Switch Type (DP 47)
 ####################################################
 - select:
-    id: "switch_type"
-    friendly_name: "Switch Type"
+    id: 47
+    friendly_name: "開關類型"
     platform: "select"
     entity_category: "config"
     select_options:
       flip: "Flip"
       sync: "Sync"
       button: "Button"
+    scan_interval: 30
